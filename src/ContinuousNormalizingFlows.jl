@@ -11,6 +11,7 @@ import ADTypes,
     Distributions,
     DistributionsAD,
     Enzyme,
+    EnzymeCore,
     FillArrays,
     LinearAlgebra,
     Lux,
@@ -69,6 +70,8 @@ include(joinpath("exts", "mlj_ext", "core_cond_icnf.jl"))
 include(joinpath("exts", "dist_ext", "core.jl"))
 include(joinpath("exts", "dist_ext", "core_icnf.jl"))
 include(joinpath("exts", "dist_ext", "core_cond_icnf.jl"))
+
+include(joinpath("exts", "enzyme_ext.jl"))
 
 """
 Implementations of Infinitesimal Continuous Normalizing Flows Algorithms in Julia

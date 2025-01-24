@@ -17,6 +17,17 @@ import ADTypes,
     Test,
     ContinuousNormalizingFlows
 
+Enzyme.API.fast_math!(false)
+Enzyme.API.inlineall!(true)
+Enzyme.API.instname!(true)
+Enzyme.API.looseTypeAnalysis!(false)
+Enzyme.API.maxtypedepth!(typemax(Int))
+Enzyme.API.maxtypeoffset!(typemax(Int))
+Enzyme.API.memmove_warning!(true)
+Enzyme.API.strictAliasing!(false)
+Enzyme.API.strong_zero!(false)
+Enzyme.API.typeWarning!(true)
+
 GROUP = get(ENV, "GROUP", "All")
 
 if (GROUP == "All")

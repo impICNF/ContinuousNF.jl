@@ -27,7 +27,8 @@ import ADTypes,
     ScientificTypesBase,
     SciMLBase,
     SciMLSensitivity,
-    Statistics
+    Statistics,
+    Zygote
 
 export construct,
     inference,

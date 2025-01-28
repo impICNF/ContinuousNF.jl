@@ -6,6 +6,7 @@ import ADTypes,
     Lux,
     PkgBenchmark,
     StableRNGs,
+    Zygote,
     ContinuousNormalizingFlows
 
 SUITE = BenchmarkTools.BenchmarkGroup()
@@ -57,22 +58,8 @@ end
 
 diff_loss_tn(ps)
 diff_loss_tt(ps)
-DifferentiationInterface.gradient(
-    diff_loss_tn,
-    ADTypes.AutoEnzyme(;
-        mode = Enzyme.set_runtime_activity(Enzyme.Reverse),
-        function_annotation = Enzyme.Const,
-    ),
-    ps,
-)
-DifferentiationInterface.gradient(
-    diff_loss_tt,
-    ADTypes.AutoEnzyme(;
-        mode = Enzyme.set_runtime_activity(Enzyme.Reverse),
-        function_annotation = Enzyme.Const,
-    ),
-    ps,
-)
+DifferentiationInterface.gradient(diff_loss_tn, ADTypes.AutoZygote(), ps)
+DifferentiationInterface.gradient(diff_loss_tt, ADTypes.AutoZygote(), ps)
 GC.gc()
 
 SUITE["main"]["no_inplace"]["direct"]["train"] =
@@ -82,19 +69,13 @@ SUITE["main"]["no_inplace"]["direct"]["test"] =
 SUITE["main"]["no_inplace"]["AD-1-order"]["train"] =
     BenchmarkTools.@benchmarkable DifferentiationInterface.gradient(
         diff_loss_tn,
-        ADTypes.AutoEnzyme(;
-            mode = Enzyme.set_runtime_activity(Enzyme.Reverse),
-            function_annotation = Enzyme.Const,
-        ),
+        ADTypes.AutoZygote(),
         ps,
     )
 SUITE["main"]["no_inplace"]["AD-1-order"]["test"] =
     BenchmarkTools.@benchmarkable DifferentiationInterface.gradient(
         diff_loss_tt,
-        ADTypes.AutoEnzyme(;
-            mode = Enzyme.set_runtime_activity(Enzyme.Reverse),
-            function_annotation = Enzyme.Const,
-        ),
+        ADTypes.AutoZygote(),
         ps,
     )
 
@@ -125,22 +106,8 @@ end
 
 diff_loss_tn2(ps)
 diff_loss_tt2(ps)
-DifferentiationInterface.gradient(
-    diff_loss_tn2,
-    ADTypes.AutoEnzyme(;
-        mode = Enzyme.set_runtime_activity(Enzyme.Reverse),
-        function_annotation = Enzyme.Const,
-    ),
-    ps,
-)
-DifferentiationInterface.gradient(
-    diff_loss_tt2,
-    ADTypes.AutoEnzyme(;
-        mode = Enzyme.set_runtime_activity(Enzyme.Reverse),
-        function_annotation = Enzyme.Const,
-    ),
-    ps,
-)
+DifferentiationInterface.gradient(diff_loss_tn2, ADTypes.AutoZygote(), ps)
+DifferentiationInterface.gradient(diff_loss_tt2, ADTypes.AutoZygote(), ps)
 GC.gc()
 
 SUITE["main"]["inplace"]["direct"]["train"] =
@@ -149,18 +116,12 @@ SUITE["main"]["inplace"]["direct"]["test"] = BenchmarkTools.@benchmarkable diff_
 SUITE["main"]["inplace"]["AD-1-order"]["train"] =
     BenchmarkTools.@benchmarkable DifferentiationInterface.gradient(
         diff_loss_tn2,
-        ADTypes.AutoEnzyme(;
-            mode = Enzyme.set_runtime_activity(Enzyme.Reverse),
-            function_annotation = Enzyme.Const,
-        ),
+        ADTypes.AutoZygote(),
         ps,
     )
 SUITE["main"]["inplace"]["AD-1-order"]["test"] =
     BenchmarkTools.@benchmarkable DifferentiationInterface.gradient(
         diff_loss_tt2,
-        ADTypes.AutoEnzyme(;
-            mode = Enzyme.set_runtime_activity(Enzyme.Reverse),
-            function_annotation = Enzyme.Const,
-        ),
+        ADTypes.AutoZygote(),
         ps,
     )

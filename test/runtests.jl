@@ -15,6 +15,7 @@ import ADTypes,
     StableRNGs,
     TerminalLoggers,
     Test,
+    Zygote,
     ContinuousNormalizingFlows
 
 GROUP = get(ENV, "GROUP", "All")
